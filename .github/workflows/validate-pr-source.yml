@@ -1,0 +1,45 @@
+name: Validate PR Source Branch
+
+on:
+  pull_request:
+    branches:
+      - main
+      - staging
+
+jobs:
+  validate-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR source for main
+        if: github.base_ref == 'main'
+        run: |
+          if [[ "${{ github.head_ref }}" != "staging" ]]; then
+            echo "ERROR: Pull requests to 'main' must come from 'staging' branch only!"
+            echo "Current source branch: ${{ github.head_ref }}"
+            echo ""
+            echo "Correct workflow:"
+            echo "  feature → develop → staging → main"
+            exit 1
+          else
+            echo "Valid: PR from 'staging' to 'main'"
+          fi
+
+      - name: Check PR source for staging
+        if: github.base_ref == 'staging'
+        run: |
+          if [[ "${{ github.head_ref }}" != "develop" ]]; then
+            echo "ERROR: Pull requests to 'staging' must come from 'develop' branch only!"
+            echo "Current source branch: ${{ github.head_ref }}"
+            echo ""
+            echo "Correct workflow:"
+            echo "  feature → develop → staging"
+            exit 1
+          else
+            echo "Valid: PR from 'develop' to 'staging'"
+          fi
+
+      - name: Success
+        run: |
+          echo "Branch workflow validation passed!"
+          echo "Base: ${{ github.base_ref }}"
+          echo "Head: ${{ github.head_ref }}"

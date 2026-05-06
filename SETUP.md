@@ -96,6 +96,26 @@ Remova os placeholders e preencha com features reais da sua release.
 - Adicione links para seus repos
 - Defina convenções específicas
 
+### Revisar prompts e agents adicionados
+
+- Ajuste `/api-test-pipeline` para o caminho real dos planos de teste do modulo-alvo
+- Ajuste `/api-test-quality-audit` para os gates de qualidade aceitos pelo seu time
+- Configure `api-test.agent.md` e `api-test-audit.agent.md` conforme stack real (Node, Python, Java, Go, etc.)
+
+### Revisar instructions e skills adicionados
+
+- Ajuste `frontend-guidance.instructions.md` para os diretórios reais do frontend
+- Ajuste `api-test-coverage-gate.instructions.md` para os thresholds aceitos no projeto
+- Revise os skills: `frontend-guidance`, `database-mcp-manager`, `tlc-spec-driven`, `api-test-planning-by-domain`, `caveman`
+
+### Revisar workflows novos
+
+- `api-unit-full-suite.yml`
+- `api-integration-suite.yml`
+- `api-e2e-suite.yml`
+- `semgrep-security.yml`
+- Ajuste branch strategy e scripts conforme a stack do projeto
+
 ### Editar `.github/instructions/git-workflow.md`
 
 - Customize branch strategy se diferente

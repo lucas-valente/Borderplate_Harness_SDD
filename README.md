@@ -179,12 +179,16 @@ Depois disso, os prompts podem chamar comandos previsiveis (`npm run security:sc
 - `security-review.agent.md`
 - `security-review-fix.agent.md`
 - `consultor.agent.md`
+- `api-test.agent.md` (template opcional para testes por dominio em modulo de servico)
+- `api-test-audit.agent.md` (template opcional para auditoria de testes por dominio)
 
 ### Prompts-chave
 
 - `/start-feature`
 - `/technical-planning`
 - `/feature-pipeline`
+- `/api-test-pipeline` (template opcional para testes por dominio)
+- `/api-test-quality-audit` (template opcional para auditoria de testes por dominio)
 - `/quality-gate`
 - `/audit-against-plan`
 - `/documentation-sync`
@@ -197,6 +201,8 @@ Todos os prompts podem ser executados por diferentes copilotos/agentes. Se um pr
 
 - `feature-workflow.instructions.md`
 - `secops-review.instructions.md`
+- `frontend-guidance.instructions.md`
+- `api-test-coverage-gate.instructions.md`
 
 ### Skills
 
@@ -206,6 +212,25 @@ Todos os prompts podem ser executados por diferentes copilotos/agentes. Se um pr
 - `technical-planning-manager`
 - `implementation-audit-manager`
 - `secops-audit-manager`
+- `frontend-guidance`
+- `database-mcp-manager`
+- `tlc-spec-driven`
+- `api-test-planning-by-domain`
+- `caveman`
+
+### Docs de suporte em `.github/docs/`
+
+- `plan-template.md`
+- `mcp-workflow-blueprint.md`
+- `api-test-execution-harness.md`
+
+### Workflows CI de exemplo em `.github/workflows/`
+
+- `validate-pr-source.yml`
+- `api-unit-full-suite.yml`
+- `api-integration-suite.yml`
+- `api-e2e-suite.yml`
+- `semgrep-security.yml`
 
 ## Convencoes importantes
 

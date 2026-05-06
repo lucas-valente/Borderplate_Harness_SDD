@@ -1,0 +1,72 @@
+name: Template - Node Module Integration Suite
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "api/**"
+      - "API/**"
+      - "backend/**"
+      - "server/**"
+      - "services/**"
+      - ".github/workflows/api-integration-suite.yml"
+  push:
+    branches:
+      - develop
+    paths:
+      - "api/**"
+      - "API/**"
+      - "backend/**"
+      - "server/**"
+      - "services/**"
+      - ".github/workflows/api-integration-suite.yml"
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install and run integration tests
+        shell: bash
+        run: |
+          MODULE_PATH=""
+          for CANDIDATE in api API backend server services service; do
+            if [ -f "$CANDIDATE/package.json" ]; then
+              MODULE_PATH="$CANDIDATE"
+              break
+            fi
+          done
+
+          if [ -z "$MODULE_PATH" ]; then
+            echo "No Node service module found. Skipping integration suite template."
+            exit 0
+          fi
+
+          cd "$MODULE_PATH"
+          npm ci
+
+          if npm run | grep -q "test:integration"; then
+            npm run test:integration
+            exit 0
+          fi
+
+          if npm run | grep -q "test:int"; then
+            npm run test:int
+            exit 0
+          fi
+
+          if [ -f "jest.integration.config.js" ]; then
+            npx jest --config jest.integration.config.js --runInBand
+            exit 0
+          fi
+
+          echo "No integration test command/config found. Update this workflow template for your stack."
+          exit 1

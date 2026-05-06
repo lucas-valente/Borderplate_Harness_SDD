@@ -37,6 +37,8 @@ Integrar MCP servers nos workflows de planejamento, implementação, QA e docume
 |--------|----------------|
 | `/technical-planning` | GitHub MCP (issue context) |
 | `/feature-pipeline` | Chrome DevTools MCP (QA step) |
+| `/api-test-pipeline` | Database MCP (validacao de dados), GitHub MCP (contexto de mudancas) |
+| `/api-test-quality-audit` | Database MCP (reconciliacao de evidencias), GitHub MCP (rastreio de arquivos alterados) |
 | `/quality-gate` | Chrome DevTools MCP (opcional) |
 | `/documentation-sync` | - |
 | `/audit-against-plan` | Database MCP (validação de dados) |

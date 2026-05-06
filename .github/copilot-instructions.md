@@ -21,6 +21,24 @@ Este projeto usa Sistema de Documentação Descritiva (SDD):
 - `sdd-traceability-manager` — Garantir rastreabilidade SDD
 - `workspace-documentation-manager` — Sincronizar camadas
 - `doc-manager` — Manutenção de documentação
+- `technical-planning-manager` — Planejamento tecnico de implementacao
+- `implementation-audit-manager` — Auditoria de aderencia entre plano e entrega
+- `secops-audit-manager` — Auditoria SecOps end-to-end
+- `frontend-guidance` — Padroes de UX/UI e responsividade
+- `database-mcp-manager` — Diagnostico de dados via MCP de banco
+- `tlc-spec-driven` — Fluxo spec-driven adaptativo
+- `api-test-planning-by-domain` — Planejamento de testes por dominio (template)
+- `caveman` — Modo de comunicacao ultra conciso (opcional)
+
+## Prompts Complementares
+
+- `/api-test-pipeline` — Implementacao de testes por dominio (template)
+- `/api-test-quality-audit` — Auditoria de qualidade da cobertura de testes por dominio
+
+## Instructions Complementares
+
+- `.github/instructions/frontend-guidance.instructions.md`
+- `.github/instructions/api-test-coverage-gate.instructions.md`
 
 ## Convenções
 
@@ -66,5 +84,5 @@ npm test
 
 ---
 
-**Última atualização**: 2026-04-20  
+**Última atualização**: 2026-05-06  
 **Owner**: [NOME]

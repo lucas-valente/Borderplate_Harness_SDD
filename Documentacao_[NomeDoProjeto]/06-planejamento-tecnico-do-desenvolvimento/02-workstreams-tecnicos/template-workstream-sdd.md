@@ -49,9 +49,9 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 
 | REQ-ID | Descrição resumida | Cobertura técnica | Artefato |
 |--------|--------------------|-------------------|---------|
-| REQ-001 | [Descrição funcional] | `POST /users`, validação de email | `src/controllers/users.controller.ts` |
-| REQ-002 | [Descrição segurança] | `AuthGuard`, `TenantGuard` | `src/guards/auth.guard.ts` |
-| REQ-003 | [Descrição dados] | Migração de tabela usuarios | `prisma/migrations/001_usuarios.sql` |
+| REQ-001 | [Descrição funcional] | Operação principal + validação de entrada | `[caminho]/handlers/[arquivo].ts` |
+| REQ-002 | [Descrição segurança] | Policy/guard/middleware de autorização e escopo | `[caminho]/security/[arquivo].ts` |
+| REQ-003 | [Descrição dados] | Evolução de contrato/modelo de dados | `[caminho]/migrations/[arquivo].sql` |
 
 **Legenda**:
 - `OK`: Cobertura completa planejada
@@ -68,7 +68,7 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 **Tasks**:
 1. [ ] Criar DTO e Controller para novo endpoint
 2. [ ] Implementar Service com lógica de negócio
-3. [ ] Adicionar Guards (Auth, Tenant, RBAC)
+3. [ ] Adicionar controle de acesso e escopo de dados (quando aplicável)
 4. [ ] Criar testes unitários
 
 **Dependências**: Nenhuma  
@@ -77,9 +77,9 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 ### Fase 2: Dados
 
 **Tasks**:
-1. [ ] Criar Migration do Prisma
-2. [ ] Atualizar `prisma/schema.prisma`
-3. [ ] Executar migration em dev/staging
+1. [ ] Criar migration/evolução de dados conforme stack
+2. [ ] Atualizar contratos/modelos de dados do módulo
+3. [ ] Executar atualização em ambiente de validação
 
 **Dependências**: Fase 1 (DTO e schema já conhecidos)  
 **Duração estimada**: [Horas/dias]
@@ -87,7 +87,7 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 ### Fase 3: Frontend
 
 **Tasks**:
-1. [ ] Criar componentes React
+1. [ ] Criar componentes na stack de frontend adotada
 2. [ ] Conectar aos endpoints do backend
 3. [ ] Implementar estado local/global
 4. [ ] Testes de integração
@@ -122,7 +122,7 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 **Erros**:
 - 400: Validação de input falhou
 - 401: Não autenticado
-- 403: Acesso negado (RBAC/tenant)
+- 403: Acesso negado (permissão/escopo)
 - 409: Recurso duplicado
 
 ---
@@ -136,7 +136,7 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 ## Decisões Técnicas
 
 - **[Decisão 1]**: Por que essa stack e não a alternativa?
-- **[Decisão 2]**: Por que esse padrão de autenticação?
+- **[Decisão 2]**: Por que esse padrão de autorização/escopo?
 
 ---
 
@@ -144,8 +144,8 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 
 | Risco | Impacto | Mitigação |
 |-------|---------|-----------|
-| Performance de query com N+1 | Alto | Usar `include` do Prisma instead de múltiplas queries |
-| Tenant isolation quebrada | Crítico | TenantGuard em todo endpoint; testes de tenant boundary |
+| Degradação de consulta/IO em fluxo crítico | Alto | Revisar consulta, índices e estratégia de acesso |
+| Falha de isolamento de escopo de dados | Crítico | Aplicar guardrails de escopo e testes de boundary |
 | Regressão em fluxo existente | Médio | Smoke tests + regression tests antes de merge |
 
 ---
@@ -161,8 +161,8 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 ### Testes de Integração
 
 - [ ] Fluxo end-to-end (request → banco de dados → response)
-- [ ] Tenant isolation (requisição de outro tenant é rejeitada)
-- [ ] RBAC (usuário sem permissão é rejeitado)
+- [ ] Isolamento de escopo (requisição fora do escopo é rejeitada)
+- [ ] Permissões (ator sem permissão é rejeitado)
 
 ### Smoke Tests
 
@@ -188,7 +188,7 @@ spec-de-origem: "04-planejamento-do-produto/03-especificacoes/NN-feature-nome-0-
 - Spec: [Link para spec]
 - Branch: `feature/[nome-descritivo]`
 - PR: [Link quando existir]
-- Testes: `src/__tests__/[feature-name].spec.ts`
+- Testes: `[caminho-testes]/[feature-name].spec.[ext]`
 
 ---
 
